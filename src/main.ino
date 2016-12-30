@@ -133,7 +133,7 @@ void setLEDLight(double &value){
 
     }
 
-    analogWrite(GREEN_LED_PIN, 1);
+    analogWrite(GREEN_LED_PIN, 1022);
     digitalWrite(D1, HIGH);
     analogWrite(RED_LED_PIN, redValue);
     Serial.printf("light %d\n", value);
