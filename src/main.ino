@@ -1,12 +1,17 @@
 #include <Arduino.h>
-#include <ESP8266WiFi.h>          //https://github.com/esp8266/Arduino
-#include <ESP8266WiFiMulti.h>
-#include <ESP8266HTTPClient.h>
 
-//needed for library
+#include <ESP8266WiFi.h>
+#include <WiFiManager.h>
+#include <ESP8266WiFiMulti.h>
+#include "ESP8266WebServer.h"
 #include <DNSServer.h>
-#include <ESP8266WebServer.h>
-#include <WiFiManager.h>         //https://github.com/tzapu/WiFiManager
+#include <ESP8266HTTPClient.h>
+#include <ESP8266httpUpdate.h>
+#include <FirebaseArduino.h>
+
+// Set these to run example.
+#define FIREBASE_HOST "dropcube-c11b6.firebaseio.com"
+#define FIREBASE_AUTH "g8LHGVLv3QJ8yFBatXY1cmzS1tCkwEBY1qT6PIoo"
 
 
 //#define LED     D0        // Led in NodeMCU at pin GPIO16 (D0).
@@ -15,7 +20,8 @@
 #define PULSE     INHALE*1000/BRIGHT
 #define REST      1000    //Rest Between Inhalations.
 
-ESP8266WiFiMulti WiFiMulti;
+
+
 char dropcube_id[34] = "YOUR_DROPCUBE_ID";
 
 unsigned int nextTime = 0;    // Next time to contact the server
@@ -62,13 +68,24 @@ pinMode(RED_LED_PIN, OUTPUT);
     //if you get here you have connected to the WiFi
     Serial.println("connected...yeey :)");
     strcpy(dropcube_id, custom_dropcube_id.getValue());
+
+    Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
+    delay(5000);
 }
 
 void loop() {
 
 
+
     if (nextTime > millis()) {
         return;
+    }
+
+    Firebase.setFloat("/number", 42.0);
+    // handle error
+    if (Firebase.failed()) {
+        Serial.print("setting /number failed:");
+        Serial.println(Firebase.error());
     }
 
     light = retrieveLight();
@@ -83,7 +100,7 @@ void loop() {
 
 double retrieveLight(){
 
-  if((WiFiMulti.run() == WL_CONNECTED)) {
+  if((WiFi.isConnected())) {
 
       HTTPClient http;
 
