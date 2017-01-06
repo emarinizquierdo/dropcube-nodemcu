@@ -12,7 +12,6 @@
 // Set these to run example.
 #define FIREBASE_HOST "dropcube-c11b6.firebaseio.com"
 #define FIREBASE_AUTH "g8LHGVLv3QJ8yFBatXY1cmzS1tCkwEBY1qT6PIoo"
-#define DROPCUBE_ID "edu"
 
 /* MODE CONTROL */
 unsigned int modeNextTime = 0;
@@ -35,7 +34,7 @@ unsigned long lastTime = 0;
 int waitTime = 0;
 
 
-char dropcube_id[34] = "YOUR_DROPCUBE_ID";
+char dropcube_id[34] = "5692462144159744";
 
 const int RED = D2;
 const int GREEN = D4;

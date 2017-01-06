@@ -5,9 +5,14 @@ void checkMode(){
   }
 
 String path = "/MODE";
-String id = "edu";
 
-  mode = Firebase.getString(id + path);
+  mode = Firebase.getString(dropcube_id + path);
+  //TODO control errors.
+  if (!Firebase.success()) {
+      Serial.print("getting value failed");
+      mode = "NORMAL";
+  }
+
   Serial.print(mode);
   modeNextTime = millis() + 5000;
 
