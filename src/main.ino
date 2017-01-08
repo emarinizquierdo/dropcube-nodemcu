@@ -1,7 +1,6 @@
 #include "configuration.h"
 
 
-
 void setup() {
 
   config();
@@ -11,65 +10,65 @@ void setup() {
 void loop() {
 
   checkMode();
-  if(mode == "RAINBOW"){
+
+  if(modeValue == "RAINBOW"){
+
     rainbow();
-  }else if(mode == "TEST_HOT"){
+
+  }else if(modeValue == "TEST_HOT"){
+
     hot(1023);
-  }else if(mode == "TEST_RAIN"){
+
+  }else if(modeValue == "TEST_RAIN"){
+
     rain(1023);
-  }else if(mode == "TEST_SNOW"){
+
+  }else if(modeValue == "TEST_SNOW"){
+
     snow(1023);
-  }else if(mode == "TEST_STORM"){
+
+  }else if(modeValue == "TEST_STORM"){
+
+    rain(1023);
     storm();
-  }else if(mode == "TEST_WIND"){
+
+  }else if(modeValue == "TEST_WIND"){
+
     wind(1023);
+
+  }else{
+
+    if(snowValue > 0){
+
+      snow(snowValue);
+      if(stormValue){
+        storm();
+      }
+
+    }else if(rainValue > 0){
+
+      rain(rainValue);
+      if(stormValue){
+        storm();
+      }
+
+    }else if(hotValue > 0){
+
+      hot(hotValue);
+
+    }else if(windValue > 0){
+
+      wind(windValue);
+
+    }else{
+
+      snow(0);
+      rain(0);
+      hot(0);
+      wind(0);
+
+    }
   }
-/*
-    case "RAINBOW" :
-
-
-    break;
-    case "TEST_HOT" :
-hot(1023);
-
-    break;
-    case "TEST_SNOW" :
-
-
-    break;
-    case "TEST_WIND" :
-
-
-    break;
-    case "TEST_STORM" :
-
-
-    break;
-    default: //NORMAL
-
-    break;
-  }
-*/
-
-
-/*
-    red = Firebase.getFloat("red");
-    green = Firebase.getFloat("green");
-    blue = Firebase.getFloat("blue");
-
-    setLEDLight(RED, red);
-    setLEDLight(GREEN, green);
-    setLEDLight(BLUE, blue);
-*/
-    //delay(1000);
-    //storm();
-
-    /*
-    setLEDLight(RED, red);
-    setLEDLight(GREEN, green);
-    setLEDLight(BLUE, blue);
-    */
-
 }
 
 
